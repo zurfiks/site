@@ -1,0 +1,3 @@
+[submodule "themes/hugo-theme-comic"]
+	path = themes/hugo-theme-comic
+	url = https://gitlab.com/mrubli/hugo-theme-comic
