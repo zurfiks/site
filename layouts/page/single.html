@@ -1,0 +1,14 @@
+{{ define "main" }}
+
+<div class="prose lg:prose-xl max-w-none my-14 text-zinc-800 leading-loose">
+  <header class="border-b pb-8 mb-8">
+    <h1 style="color: red" class="text-5xl font-black italic text-zinc-800">{{ .Title }}</h1>
+    {{ with .Params.description }}
+      <p class="text-xl font-medium text-zinc-600 italic mt-4">{{ . }}</p>
+    {{ end }}
+  </header>
+
+  {{ .Content }}
+</div>
+
+{{ end }}
