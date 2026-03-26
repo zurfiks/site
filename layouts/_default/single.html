@@ -1,0 +1,87 @@
+{{ define "main" }}
+{{- partial "content/breadcrumb.html" . -}}
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
+
+  <article class="md:col-span-2 prose lg:prose-lg max-w-none">
+
+    <header class="not-prose border-b pb-8 mb-8">
+      
+      <h1 id="title" class="text-4xl md:text-5xl font-bold leading-tight mb-4 italic text-zinc-800">{{ .Title }}</h1>
+
+      <div id="lead" class="my-6">
+        <p class="text-xl font-medium text-zinc-600 leading-relaxed">{{ .Params.description }} </p>
+      </div>
+      
+      {{- partial "content/authors.html" . -}}
+      
+    </header>
+
+    {{- partial "content/media.html" . -}}
+
+    <figure id="featureimage" class="rounded-xl aspect-video mb-8">
+      {{- if .Params.image }}
+        {{- if ( strings.HasPrefix .Params.image "http" ) }}
+          <img class="rounded-lg shadow-md border w-full h-full object-cover" src="{{ .Params.image }}" alt="{{ .Params.title }}">
+        {{- else }}
+          {{- with $image := resources.Get .Params.image }}
+            {{- $image := $image.Resize "1200x" }}
+            <img class="rounded-lg shadow-md border w-full h-full object-cover" src="{{ $image.Permalink }}" alt="{{ .Params.title }}" width="{{ $image.Width }}" height="{{ $image.Height }}">
+          {{- end }}
+        {{- end }}
+      {{- end }}
+      {{- if ( isset .Params "caption" ) }}
+        <figcaption class="text-center italic text-sm mt-2 text-zinc-500">{{ .Params.caption }}</figcaption>
+      {{- end }}
+    </figure>
+
+    <div id="content" class="mb-14 text-zinc-800 leading-loose">
+      <!-- Content -->
+      {{- .Content -}}
+
+      {{- partial "content/links.html" . -}}
+
+      <!-- Tags list -->
+      <div class="mt-12 not-prose border-t pt-8">
+        <span class="font-bold text-zinc-700 mr-2 uppercase tracking-widest text-sm">Etykiety:</span>
+        {{- partial "terms.html" (dict "taxonomy" "tags" "page" .) -}}
+      </div>
+
+    </div>
+
+    <footer id="content-footer" class="not-prose mt-16 border-t pt-10">
+
+      <div id="author-box" class="my-8 border p-8 bg-zinc-50 rounded-3xl shadow-sm border-zinc-200">
+        <div class="flex items-center space-x-6">
+          <img class="w-24 h-24 rounded-full border-4 border-white shadow-md" src="{{ site.Params.Author.avatar | relURL }}" alt="{{ site.Params.Author.name }}">
+          <div>
+            <h2 class="text-2xl font-bold text-zinc-800">{{ site.Params.Author.name }}</h2>
+            <p class="mt-2 text-zinc-600 italic leading-relaxed">{{ site.Params.Author.bio }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="related-post" class="mt-16">
+        <h2 class="text-2xl font-bold mb-8 border-b pb-2 italic text-zinc-700">Polecamy również uwadze:</h2>
+        {{- $related := .Site.RegularPages.Related . | first 2 -}}
+        {{- with $related -}}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {{- range . }}
+          {{- partial "content/card.html" . -}}
+          {{- end }}
+        </div>
+        {{- end }}
+      </div>
+
+    </footer>
+
+  </article>
+
+  <!-- Aside -->
+  <aside class="md:col-span-1 border-l pl-6 hidden md:block">
+    {{- partial "content/aside.html" . -}}
+  </aside>
+
+</div>
+  
+{{ end }}

@@ -1,4 +1,15 @@
 baseURL = 'https://example.org/'
-languageCode = 'en-us'
+languageCode = 'pl'
 title = 'Żurfiks'
-theme = 'hugo-theme-comic'
+theme = 'pehtheme-hugo'
+
+[taxonomies]
+  tag = "tags"
+  author = "authors"
+
+[params]
+  mainSections = ["posts"]
+  [params.Author]
+    name = "Redakcja Żurfiks"
+    avatar = "images/logo.png"
+    bio = "Kolektyw artystyczny Żurfiks. Piękno, sztuka i odrobina dekadencji."
