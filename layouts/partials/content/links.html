@@ -1,15 +1,13 @@
 {{ if .Params.links }}
-<div class="related-links my-10 p-6 bg-blue-50 rounded-2xl border border-blue-100 shadow-sm">
-  <h4 class="text-xl font-bold mb-4 text-blue-800 italic">Czytelnia uzupełniająca i powiązania:</h4>
-  <ul class="space-y-4">
-    {{ range .Params.links }}
-      <li class="flex flex-col">
-        <a href="{{ .link | relURL }}" class="text-lg font-semibold text-blue-700 hover:underline">
-          {{ .anchor }}
-        </a>
-        <span class="text-sm text-zinc-500 italic">{{ .visible_link }}</span>
-      </li>
-    {{ end }}
-  </ul>
+<div class="links">
+    <h4>Czytelnia uzupełniająca i powiązania:</h4>
+    <ul>
+        {{ range .Params.links }}
+        <li>
+            <a href="{{ .link | relURL }}"><strong>{{ .anchor }}</strong></a><br>
+            <small><i>{{ .visible_link }}</i></small>
+        </li>
+        {{ end }}
+    </ul>
 </div>
 {{ end }}

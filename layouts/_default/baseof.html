@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en-us" }}" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <style>
+        /* Minimalist Polish High-Brow Aesthetic adjustments */
+        header { padding: 2rem 0; border-bottom: 3px double #333; margin-bottom: 2rem; }
+        footer { margin-top: 3rem; border-top: 1px solid #ccc; padding: 1rem 0; font-size: 0.8rem; }
+        h1, h2, h3 { font-family: serif; }
+        nav ul { list-style: none; padding: 0; display: flex; gap: 1rem; }
+        .authors { font-style: italic; color: #555; margin-bottom: 1rem; }
+        .links { border-top: 1px dashed #ccc; margin-top: 2rem; padding-top: 1rem; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <hgroup>
+            <h1><a href="/" class="contrast">{{ .Site.Title }}</a></h1>
+            <p>Salon Artystyczny Społeczności Żurfiks</p>
+        </hgroup>
+        <nav>
+            <ul>
+                <li><a href="/">Strona Główna</a></li>
+                {{ range .Site.Menus.main }}
+                <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                {{ end }}
+                <li><a href="/pages/about">O Nas</a></li>
+                <li><a href="/pages/contact">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    <footer class="container">
+        <small>&copy; {{ now.Format "2006" }} {{ .Site.Title }}. Wszelkie prawa zastrzeżone dla Salonu.</small>
+    </footer>
+</body>
+</html>

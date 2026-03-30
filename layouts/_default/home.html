@@ -1,56 +1,50 @@
 {{ define "main" }}
+<section>
+    <hgroup>
+        <h2>Najnowsze doniesienia z Salonu</h2>
+        <p>Głosy, obrazy i dźwięki z życia naszej społeczności</p>
+    </hgroup>
+    
+    <nav>
+        <ul>
+            <li><strong>Filtruj:</strong></li>
+            {{ range $name, $items := .Site.Taxonomies.tags }}
+            <li><a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}" class="secondary">#{{ $name }}</a></li>
+            {{ end }}
+        </ul>
+    </nav>
 
-<section class="my-10 border-b pb-10">
-  <div class="flex flex-col md:flex-row items-center justify-between mb-8">
-    <h1 class="text-5xl font-black italic text-zinc-800 mb-4 md:mb-0">Salon Artystyczny Żurfiks</h1>
-    <div class="flex space-x-2">
-      <a href="/pages/about" class="rounded-full border px-6 py-2 bg-zinc-100 hover:bg-zinc-200 font-bold uppercase text-sm tracking-wider">O Nas</a>
-      <a href="/pages/contact" class="rounded-full border px-6 py-2 bg-zinc-100 hover:bg-zinc-200 font-bold uppercase text-sm tracking-wider">Kontakt</a>
+    <div class="grid">
+        {{ $paginator := .Paginate (where .Site.RegularPages "Section" "posts") }}
+        {{ range $paginator.Pages }}
+        <article>
+            <header>
+                <hgroup>
+                    <h3><a href="{{ .RelPermalink }}" class="contrast">{{ .Title }}</a></h3>
+                    <p>{{ .Date.Format "02.01.2006" }}</p>
+                </hgroup>
+                {{ partial "content/authors.html" . }}
+            </header>
+            <p>{{ .Summary }}</p>
+            <footer>
+                <a href="{{ .RelPermalink }}" role="button" class="outline">Czytaj dalej…</a>
+            </footer>
+        </article>
+        {{ end }}
     </div>
-  </div>
 
-  <div class="flex flex-wrap gap-2 mt-4">
-    <span class="w-full text-xs font-bold uppercase tracking-widest text-zinc-400 mb-2">Filtruj według gatunku lub autora:</span>
-    <a href="/" class="px-4 py-1 rounded-full border bg-blue-600 text-white text-sm font-bold">Wszystko</a>
-    {{ range .Site.Taxonomies.authors }}
-      <a href="/authors/{{ .Page.Title | urlize }}" class="px-4 py-1 rounded-full border bg-zinc-100 hover:bg-zinc-200 text-sm font-bold italic">{{ .Page.Title }}</a>
+    {{ if gt $paginator.TotalPages 1 }}
+    <nav>
+        <ul>
+            {{ if $paginator.HasPrev }}
+            <li><a href="{{ $paginator.Prev.URL }}" role="button" class="secondary">← Poprzednia</a></li>
+            {{ end }}
+            <li><small>Strona {{ $paginator.PageNumber }} z {{ $paginator.TotalPages }}</small></li>
+            {{ if $paginator.HasNext }}
+            <li><a href="{{ $paginator.Next.URL }}" role="button" class="secondary">Następna →</a></li>
+            {{ end }}
+        </ul>
+    </nav>
     {{ end }}
-    {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
-       <a href="/tags/{{ $name | urlize }}" class="px-4 py-1 rounded-full border bg-zinc-100 hover:bg-zinc-200 text-sm font-bold lowercase">{{ $name }}</a>
-    {{ end }}
-  </div>
 </section>
-
-<section class="mb-16">
-  <div class="flex items-center mb-10 border-l-4 border-blue-600 pl-4">
-    <h2 class="text-3xl font-bold italic text-zinc-700">Najnowsze doniesienia z Salonu</h2>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    {{ $paginator := .Paginate (where .Site.RegularPages "Section" "posts") }}
-    {{ range $paginator.Pages }}
-      <article class="relative group bg-zinc-100 hover:bg-blue-100 rounded-3xl p-6">
-        <a class="absolute inset-0 z-10" href="{{ .Permalink }}"></a>
-        <div>
-          <time class="text-sm text-zinc-500 italic">{{ .Date.Format "02.01.2006" }}</time>
-          <h3 class="my-4 text-2xl font-bold text-zinc-800">{{ .LinkTitle }}</h3>
-          <p class="text-normal leading-normal text-zinc-500 line-clamp-2 italic">{{ .Params.description }}</p>
-        </div>
-      </article>
-    {{ end }}
-  </div>
-
-  <div class="flex items-center justify-center mt-16 space-x-4">
-    {{ if $paginator.HasPrev }}
-      <a class="border rounded-full px-8 py-3 hover:bg-zinc-200 font-bold shadow-sm" href="{{ $paginator.Prev.URL }}">← Poprzednie</a>
-    {{ end }}
-
-    <span class="text-zinc-400 italic">Strona {{ $paginator.PageNumber }} z {{ $paginator.TotalPages }}</span>
-
-    {{ if $paginator.HasNext }}
-      <a class="border rounded-full px-8 py-3 hover:bg-zinc-200 font-bold shadow-sm" href="{{ $paginator.Next.URL }}">Następne →</a>
-    {{ end }}
-  </div>
-</section>
-
 {{ end }}

@@ -1,22 +1,12 @@
-<div id="writer" class="flex items-center space-x-4 my-4">
-  <div class="flex items-center space-x-2 text-sm italic">
-    <span class="font-semibold text-zinc-700">Autorzy:</span>
-    <div class="flex flex-wrap space-x-2">
-      {{ range $index, $author := .Params.authors }}
+<div class="authors">
+    <strong>Autorzy:</strong>
+    {{ range $index, $author := .Params.authors }}
         {{ if $index }}<span>,</span>{{ end }}
         {{ $url := printf "/authors/%s" ($author | urlize) }}
-        <a href="{{ $url | relURL }}" class="hover:underline text-blue-600 font-bold uppercase">{{ $author }}</a>
-      {{ else }}
+        <a href="{{ $url | relURL }}">{{ $author }}</a>
+    {{ else }}
         <span>{{ site.Params.Author.name }}</span>
-      {{ end }}
-    </div>
-  </div>
-</div>
-
-<div class="text-sm text-zinc-500 mb-6">
-  {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}
-  {{- $dateHuman := .Date | time.Format ":date_long" -}}
-  <time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
-  <span class="mx-2">•</span>
-  {{ .ReadingTime }} min czytania
+    {{ end }}
+    <span class="mx-2">•</span>
+    {{ .ReadingTime }} min czytania
 </div>

@@ -1,7 +1,6 @@
 baseURL = 'https://example.org/'
 languageCode = 'pl'
 title = 'Żurfiks'
-theme = 'pehtheme-hugo'
 
 [taxonomies]
   tag = "tags"

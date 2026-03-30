@@ -6,7 +6,7 @@ description: "Blebleble, wsadź sobie w de."
 tags: ["herbata", "audio"]
 authors: ["Starszy Pan B"]
 type: "soundcloud"
-soundcloud_url: "https://soundcloud.com/user-722164434/herbatka-starsi-panowie"
+soundcloud_url: "https://soundcloud.com/filip-dreger/artysci/s-6ZR6U?in=filip-dreger/sets/sze-kawa-k-w-k/s-5JcbL&si=4ef1bc93441c452391b4dcbafde0aec7&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing"
 links:
   - link: "/pages/contact"
     visible_link: "Zaproszenie na herbatę"

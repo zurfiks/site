@@ -1,36 +1,40 @@
 {{ define "main" }}
-
-<header class="my-14 border-b pb-8">
-  <h1 class="text-4xl font-black italic text-zinc-800">
-    {{ if eq .Data.Plural "authors" }}Autor: {{ .Title }}
-    {{ else if eq .Data.Plural "tags" }}Etykieta: #{{ .Title }}
-    {{ else }}{{ .Title }}{{ end }}
-  </h1>
+<header>
+    <h1>
+        {{ if eq .Data.Plural "authors" }}Autor: {{ .Title }}
+        {{ else if eq .Data.Plural "tags" }}Etykieta: #{{ .Title }}
+        {{ else }}{{ .Title }}{{ end }}
+    </h1>
 </header>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-  {{ range .Paginator.Pages }}
-    <article class="relative group bg-zinc-100 hover:bg-blue-100 rounded-3xl p-6">
-      <a class="absolute inset-0 z-10" href="{{ .Permalink }}"></a>
-      <div>
-        <time class="text-sm text-zinc-500 italic">{{ .Date.Format "02.01.2006" }}</time>
-        <h3 class="my-4 text-2xl font-bold text-zinc-800">{{ .LinkTitle }}</h3>
-        <p class="text-normal leading-normal text-zinc-500 line-clamp-2 italic">{{ .Params.description }}</p>
-      </div>
+<div class="grid">
+    {{ range .Paginator.Pages }}
+    <article>
+        <header>
+            <hgroup>
+                <h3><a href="{{ .RelPermalink }}" class="contrast">{{ .Title }}</a></h3>
+                <p>{{ .Date.Format "02.01.2006" }}</p>
+            </hgroup>
+        </header>
+        <p>{{ .Summary }}</p>
+        <footer>
+            <a href="{{ .RelPermalink }}" role="button" class="outline">Czytaj dalej…</a>
+        </footer>
     </article>
-  {{ end }}
+    {{ end }}
 </div>
 
-<div class="flex items-center justify-center mb-16 space-x-4">
-  {{ if .Paginator.HasPrev }}
-    <a class="border rounded-full px-8 py-3 hover:bg-zinc-200 font-bold shadow-sm" href="{{ .Paginator.Prev.URL }}">← Poprzednie</a>
-  {{ end }}
-
-  <span class="text-zinc-400 italic">Strona {{ .Paginator.PageNumber }} z {{ .Paginator.TotalPages }}</span>
-
-  {{ if .Paginator.HasNext }}
-    <a class="border rounded-full px-8 py-3 hover:bg-zinc-200 font-bold shadow-sm" href="{{ .Paginator.Next.URL }}">Następne →</a>
-  {{ end }}
-</div>
-
+{{ if gt .Paginator.TotalPages 1 }}
+<nav>
+    <ul>
+        {{ if .Paginator.HasPrev }}
+        <li><a href="{{ .Paginator.Prev.URL }}" role="button" class="secondary">← Poprzednia</a></li>
+        {{ end }}
+        <li><small>Strona {{ .Paginator.PageNumber }} z {{ .Paginator.TotalPages }}</small></li>
+        {{ if .Paginator.HasNext }}
+        <li><a href="{{ .Paginator.Next.URL }}" role="button" class="secondary">Następna →</a></li>
+        {{ end }}
+    </ul>
+</nav>
+{{ end }}
 {{ end }}
